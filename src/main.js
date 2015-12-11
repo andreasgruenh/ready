@@ -19,10 +19,10 @@ var server = app.listen(8080, function () {
 wss.on('connection', function(socket) {
   var client = {
     socket: socket,
-    exercises: {};
+    exercises: {}
   };
   clients.push(client);
-
+  updateState();
   socket.on('message', function(message) {
     if(message < 0) {
       client.exercises[-message] = false;
@@ -32,18 +32,29 @@ wss.on('connection', function(socket) {
     updateState();
   });
   socket.on('close', function() {
-
+    var index = clients.indexOf(client);
+    clients.splice(index, 1);
   });
-  socket.send(`META: client_count: ${wss.clients.length}`);
+
 });
 
 function updateState() {
-  var exercises = clients.reduce((agg))
-  clients.forEach(function(client) {
-    client.socket.send(createExerciseString());W
+  clients.forEach(client => {
+    client.socket.send(`META: client_count: ${clients.length}`);
+    client.socket.send(calculateFinishCounts().join('%'));
   });
 };
 
-function createExerciseString() {
-  return exercises.reduce((str, e) => str+'%'+e, '');
+function calculateFinishCounts() {
+  var result = [];
+  _.times(exerciseCount, i => {
+    var doneCount = _(clients)
+      .pluck('exercises')
+      .map(e => e[i+1])
+      .filter()
+      .countBy()
+      .value().true;
+    result.push(doneCount);
+  });
+  return result.map(e => e === undefined ? 0 : e);
 }

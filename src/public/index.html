@@ -1,35 +1,31 @@
-<!doctype>
+<!doctype html>
 <html>
 <head>
+    <meta charset="utf-8" />
+    <title> Progress Buttons </title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <form id="form">
-    <input id="input" type="text">
-    <button id="send">Senden!</button>
-  </form>
-  <div id="messages"></div>
+	<div id="wrapper">
+		<h1> Progress Buttons </h1>
+		<p> When you are done with an exercise, please click the respective button! </p>
+		<ul>
+			<li> Exercise <button id="1"> Done!</button></li>
+			<li> Exercise <button id="2"> Done!</button></li>
+			<li> Exercise <button id="3"> Done!</button></li>
+			<li> Exercise <button id="4"> Done!</button></li>
+			<li> Exercise <button id="5"> Done!</button></li>
+			<li> Exercise <button id="6"> Done!</button></li>
+			<li> Exercise <button id="7"> Done!</button></li>
+			<li> Exercise <button id="8"> Done!</button></li>
+			<li> Exercise <button id="9"> Done!</button></li>
+			<li> Exercise <button id="10"> Done!</button></li>
+			<li> Exercise <button id="11"> Done!</button></li>
+			<li> Exercise <button id="12"> Done!</button></li>
+			<li> Exercise <button id="13"> Done!</button></li>
+		</ul>
+	</div>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script>
-    var url = "ws://localhost:8000";
-    var ws = new WebSocket(url);
-    ws.onopen = function() {
-      console.log('Connected to websocket');
-    };
-    var form =$('#form');
-    var button = $('#button');
-    var input = $('#input');
-    var messages = $('#messages');
-    form.on('submit', function(e) {
-      e.preventDefault();
-      ws.send(input.val());
-      input.val('');
-    });
-    ws.onmessage = function(e) {
-      console.log(e.data);
-      var p = $('<p></p>');
-      p.append(e.data);
-      messages.append(p);
-    };
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!doctype>
+<html>
+<head>
+</head>
+<body>
+  <form id="form">
+    <input id="input" type="text">
+    <button id="send">Senden!</button>
+  </form>
+  <div id="messages"></div>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script>
+    var url = "ws://localhost:8000";
+    var ws = new WebSocket(url);
+    ws.onopen = function() {
+      console.log('Connected to websocket');
+    };
+    var form =$('#form');
+    var button = $('#button');
+    var input = $('#input');
+    var messages = $('#messages');
+    form.on('submit', function(e) {
+      e.preventDefault();
+      ws.send(input.val());
+      input.val('');
+    });
+    ws.onmessage = function(e) {
+      console.log(e.data);
+      var p = $('<p></p>');
+      p.append(e.data);
+      messages.append(p);
+    };
+  </script>
+</body>
+</html>

@@ -34,6 +34,7 @@ wss.on('connection', function(socket) {
   socket.on('close', function() {
     var index = clients.indexOf(client);
     clients.splice(index, 1);
+    updateState();
   });
 
 });

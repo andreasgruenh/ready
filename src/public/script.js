@@ -1,5 +1,5 @@
 function getDomain() {
-  return window.location.href.match(/https?...(.*)/)[1].replace(/:.{5}/, '');
+  return window.location.href.match(/https?...([^\/]*)/)[1].replace(/:.{5}/, '');
 }
 
 var url = "ws://" + getDomain() + ":8000";
